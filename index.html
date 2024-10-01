@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="title">Weather App</h1>
+        <p class="cityname">Enter City Name:</p>
+        <input type="text" id="cityname" placeholder="Enter City Name">
+        <button class="cityname" onclick="checkWeather()">Click me</button>
+        <p class="weatherdetails" id="weatherdetails"></p>
+    </div>
+    
+</body>
+<script> 
+    const apiKey = "95e467e8337c67a191f7ebb095ae6f56";
+    const apiURL = "https://api.openweathermap.org/data/2.5/weather?units=metric&";
+
+    async function checkWeather() {
+        let city = document.getElementById("cityname").value;
+        const response = await fetch(`${apiURL}q=${city}&appid=${apiKey}`);
+        const data = await response.json();
+
+        let weather = data.weather[0].description;
+        let temperature = data.main.temp;
+
+        let weatherdetails = document.getElementById('weatherdetails');
+        weatherdetails.innerHTML = `Weather in ${city} is ${weather} and the temperature is ${temperature}°C`;
+    }
+</script>
+</html>
